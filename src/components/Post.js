@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 const Post = ({postData}) => {
   const {title, author, date, isPublished, body, tags} = postData
@@ -6,9 +7,6 @@ const Post = ({postData}) => {
   return (
     <div className="post">
       <div className="post-heading">
-        {
-          // TODO: validate props
-        }
         <h2>{title}</h2>
         {isPublished ? <p>{body}</p> : <p>Coming soon!</p>}
       </div>
@@ -23,5 +21,16 @@ const Post = ({postData}) => {
     </div>
   );
 };
+
+Post.propTypes = {
+  postData: PropTypes.shape({
+    author: PropTypes.string,
+    body: PropTypes.string,
+    date: PropTypes.string,
+    isPublished: PropTypes.bool,
+    tags: PropTypes.arrayOf(PropTypes.string),
+    title: PropTypes.string,
+  }).isRequired
+}
 
 export default Post;
