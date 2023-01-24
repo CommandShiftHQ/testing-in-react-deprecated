@@ -1,5 +1,5 @@
 import React from "react";
-import { render } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import renderer from "react-test-renderer";
 import Post from "../components/Post";
 
@@ -38,5 +38,19 @@ describe("Post", () => {
     );
 
     expect(screen.getByText("Author: test author")).toBeInTheDocument();
+  });
+
+  test("Renders single button with the correct text", () => {
+    render(
+      <Post
+        postData={validProps.postData}
+        handleUpvote={validProps.handleUpvote}
+      />
+    );
+
+    const buttons = screen.getAllByRole("button")
+
+    expect(buttons).toHaveLength(1)
+    expect(buttons[0]).toHaveTextContent(/Upvote this/)
   });
 });
