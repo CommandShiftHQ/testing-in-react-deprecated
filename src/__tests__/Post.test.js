@@ -1,5 +1,5 @@
 import React from "react";
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import renderer from "react-test-renderer";
 import Post from "../components/Post";
 
@@ -64,5 +64,19 @@ describe("Post", () => {
     const listItems = screen.getAllByRole("listitem");
 
     expect(listItems.length).toBe(3);
+  });
+
+  test("Upvote button calls handler with correct arguments", () => {
+    render(
+      <Post
+        postData={validProps.postData}
+        handleUpvote={validProps.handleUpvote}
+      />
+    );
+
+    fireEvent.click(screen.getByText(/Upvote this/));
+
+    expect(validProps.handleUpvote).toBeCalledTimes(1);
+    expect(validProps.handleUpvote).toHaveBeenCalledWith(validProps.postData.title);
   });
 });
