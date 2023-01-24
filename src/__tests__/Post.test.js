@@ -1,4 +1,5 @@
 import React from "react";
+import { render } from "@testing-library/react";
 import renderer from "react-test-renderer";
 import Post from "../components/Post";
 
@@ -26,5 +27,16 @@ describe("Post", () => {
       .toJSON();
 
     expect(testRenderer).toMatchSnapshot();
+  });
+
+  test("Post author renders correctly", () => {
+    render(
+      <Post
+        postData={validProps.postData}
+        handleUpvote={validProps.handleUpvote}
+      />
+    );
+
+    expect(screen.getByText("Author: test author")).toBeInTheDocument();
   });
 });
